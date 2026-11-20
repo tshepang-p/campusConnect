@@ -1,0 +1,102 @@
+
+@import url("header.css");
+
+
+/* Outcome Page Layout & Components */
+.outcome-page {
+  padding: 36px 40px 64px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.outcome-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 42px;
+}
+
+.outcome-container {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.outcome-card {
+  border: 1.5px solid #222222;
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.outcome-row {
+  display: flex;
+  align-items: center;
+  padding: 18px 20px;
+  font-size: 14px;
+}
+
+.outcome-row + .outcome-row {
+  border-top: 1.5px solid #222222;
+}
+
+.outcome-label {
+  width: 180px;
+  flex-shrink: 0;
+  color: #333333;
+  font-weight: 400;
+}
+
+.outcome-value {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.outcome-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #a6a6a6;
+}
+
+.outcome-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.outcome-btn {
+  min-width: 150px;
+  padding: 15px 28px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid #222222;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.outcome-btn:hover {
+  background: #f5f5f5;
+}
+
+.outcome-btn:active {
+  background: #eaeaea;
+}
+
+.cont{color: black;text-decoration: none;}
+
+@media (max-width: 520px) {
+  .outcome-page {
+    padding: 24px 16px 48px;
+  }
+
+  .outcome-label {
+    width: 130px;
+  }
+}
+
