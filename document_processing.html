@@ -6,6 +6,32 @@
   <title>Document Processing</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styleDocumentProcessing.css">
+<script>
+  const LIMIT_SECONDS = 35;
+  const params = new URLSearchParams(window.location.search);
+  let startTime = params.get('t') || localStorage.getItem('processStartTime');
+
+  if (!startTime) {
+    startTime = Date.now();
+  }
+  localStorage.setItem('processStartTime', startTime);
+  console.log('[document_processing.html] Active startTime:', startTime);
+
+  // Attach ?t=startTime to any link pointing to outcome.html
+  document.querySelectorAll('a[href*="outcome.html"]').forEach(link => {
+    link.href = 'outcome.html?t=' + startTime;
+  });
+
+  // Monitor elapsed time in console only (no automatic redirect)
+  setInterval(() => {
+    const elapsedSeconds = ((Date.now() - Number(startTime)) / 1000).toFixed(1);
+    if (elapsedSeconds < LIMIT_SECONDS) {
+      console.log(`[document_processing.html] Elapsed: ${elapsedSeconds}s (Under 35s)`);
+    } else {
+      console.warn(`[document_processing.html] Elapsed: ${elapsedSeconds}s (Over 35s - will route to statusError.html on outcome)`);
+    }
+  }, 1000);
+</script>
 </head>
 <header class="header">
     <div class="brand">
@@ -33,6 +59,7 @@
         <path d="M1 3l4 4 4-4z"/>
       </svg>
     </button>
+    
   </header>
 
 
@@ -79,5 +106,6 @@
 
     </form>
   </main>
+  
 </body>
 </html>

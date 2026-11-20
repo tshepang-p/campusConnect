@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Document Processing</title>
+  <title>Outcome</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styleOutcome.css">
-  
 </head>
-<header class="header">
+
+<body>
+  <header class="header">
     <div class="brand">
       <svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3Z"/>
@@ -36,9 +37,6 @@
     </button>
   </header>
 
-<body>
-  <!-- Place your existing <header class="header"> here -->
-
   <main class="outcome-page">
     <h1 class="outcome-title">Outcome</h1>
 
@@ -57,11 +55,55 @@
       <p class="outcome-note">Complete within 60 seconds</p>
 
       <div class="outcome-actions">
-      <a class="outcome-btn" class = "cont" href = "statusPass.html" >continue</a>
+        <a id="status-link" class="outcome-btn cont" href="#">continue</a>
       </div>
     </div>
   </main>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const LIMIT_SECONDS = 35;
+    const statusLink = document.getElementById('status-link');
+    const params = new URLSearchParams(window.location.search);
+    const startTime = params.get('t') || localStorage.getItem('processStartTime');
+
+    console.log('[outcome.html] Loaded. startTime =', startTime);
+
+    const monitor = setInterval(() => {
+      if (!startTime) {
+        console.warn('[outcome.html] No startTime found.');
+        clearInterval(monitor);
+        return;
+      }
+
+      const elapsedSeconds = ((Date.now() - Number(startTime)) / 1000).toFixed(1);
+      if (elapsedSeconds < LIMIT_SECONDS) {
+        console.log(`[outcome.html] Elapsed: ${elapsedSeconds}s (Under 35s -> will PASS)`);
+      } else {
+        console.warn(`[outcome.html] Elapsed: ${elapsedSeconds}s (Over 35s -> will ERROR)`);
+      }
+    }, 1000);
+
+    statusLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      clearInterval(monitor);
+
+      if (!startTime) {
+        window.location.href = 'statusError.html';
+        return;
+      }
+
+      const elapsedSeconds = (Date.now() - Number(startTime)) / 1000;
+      console.log(`[outcome.html] Continue clicked at ${elapsedSeconds.toFixed(2)}s.`);
+      localStorage.removeItem('processStartTime');
+
+      if (elapsedSeconds < LIMIT_SECONDS) {
+        window.location.href = 'statusPass.html';
+      } else {
+        window.location.href = 'statusError.html';
+      }
+    });
+  });
+</script>
 </body>
-
-
 </html>

@@ -37,15 +37,24 @@
   </header>
 
 
- <body>
- <div class = "page">
+<body>
+  <div class="page">
+    <h1 class="page-title">Other</h1>
 
-     <h1 class="page-title">Other</h1>
- 
-  <div class="link-list">
-    <a class="link-card" href="document_processing.html">Academic Record</a>
+    <div class="link-list">
+      <a id="academic-link" class="link-card" href="document_processing.html">Academic Record</a>
+    </div>
   </div>
- </div>
+
+  <script>
+    document.getElementById('academic-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      const now = Date.now();
+      localStorage.setItem('processStartTime', now);
+      console.log('[other.html] Timer started:', now);
+      window.location.href = 'document_processing.html?t=' + now;
+    });
+  </script>
 </body>
 
 </html>
